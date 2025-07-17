@@ -2,16 +2,16 @@
 
 # Мясофактура API
 
-Простой REST API для управления заказами в приложении «Мясофактура» на Laravel 11.
+Простой REST API для управления заказами в приложении «Мясофактура» на Laravel 12.
 
 ---
 
 ## Требования
 
-- PHP 8.1+
+- PHP 8.2+
 - Composer
 - MariaDB или MySQL
-- Laravel 11
+- Laravel 12
 - Расширения PHP: mbstring, openssl, pdo, tokenizer, xml, ctype, json, bcmath и др.
 
 ---
