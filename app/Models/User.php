@@ -2,22 +2,35 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * Модель пользователя.
+ *
+ * @property int $id
+ * @property string $name Имя пользователя
+ * @property string $phone Телефон пользователя
+ * @property string $address Адрес пользователя
+ * @property string $password Хэш пароля
+ * @property string|null $remember_token Токен запоминания сессии
+ * @property Carbon|null $created_at Время создания пользователя
+ * @property Carbon|null $updated_at Время обновления пользователя
+ *
+ * @property Collection|Order[] $orders Заказы пользователя
+ *
+ * @method static \Illuminate\Database\Eloquent\Factories\Factory factory(...$parameters)
+ */
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+
     use HasFactory, Notifiable, HasApiTokens;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'phone',
@@ -25,26 +38,21 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function orders(): User|HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }
